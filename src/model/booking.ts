@@ -17,6 +17,7 @@ const bookingSchema = new Schema(
 );
 export interface IBooking extends Document {
     _doc: any;
+    _id: string;
     event: IEvent,
     user: IUser
 }

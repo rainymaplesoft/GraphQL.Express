@@ -2,6 +2,7 @@ import Event, { IEvent } from '../model/event';
 import User from '../model/user';
 import DataLoader from 'dataloader';
 import { IUser } from '../model/user';
+import { IBooking } from '../model/booking';
 const dateToString = (date: string) => new Date(date).toISOString();
 
 
@@ -22,14 +23,6 @@ const events = async (eventIds: any) => {
     }
 };
 
-const singleEvent = async (eventId: any) => {
-    try {
-        const event = await eventLoader.load(eventId.toString());
-        return event;
-    } catch (err) {
-        throw err;
-    }
-};
 
 const userLoader = new DataLoader(userIds => {
     return User.find({ _id: { $in: userIds } });
@@ -65,6 +58,25 @@ export const transformUser = (user: IUser): any => {
         password: '',   // never reveal password
         createdEvents: createdEvents
     };
+}
+
+const singleEvent = async (eventId: any) => {
+    try {
+        const event = await eventLoader.load(eventId.toString());
+        return event;
+    } catch (err) {
+        throw err;
+    }
+};
+export const transformBooking = (booking: IBooking) => {
+    return {
+        ...booking._doc,
+        _id: booking.id,
+        user: () => user(booking._doc.user),
+        event: () => singleEvent(booking._doc.event),
+        createdAt: booking._doc.createdAt,
+        updatedAt: booking._doc.updatedAt
+    }
 }
 
 

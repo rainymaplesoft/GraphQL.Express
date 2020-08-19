@@ -45,6 +45,7 @@ const schema = buildSchema(`
     type RootQuery {
         users:          [User!]!
         events:         [Event!]!
+        bookings:       [Booking!]!
         booking:        [Booking!]!
         login(email:String!,password:String!):   AuthData!
     }

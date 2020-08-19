@@ -1,3 +1,4 @@
+import { Request } from "express";
 import Event, { IEvent, EventInput } from "../model/event";
 import User from "../model/user";
 import { transformEvent } from "./merge";
@@ -15,7 +16,7 @@ export default {
         }
     },
 
-    createEvent: async (args: { eventInput: EventInput }, req: any) => {
+    createEvent: async (args: { eventInput: EventInput }, req: Request) => {
         if (!req.body.isAuth) {
             throw new Error('Unauthenticated!');
         }

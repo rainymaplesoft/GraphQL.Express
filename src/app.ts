@@ -1,10 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { graphqlHTTP } from 'express-graphql';
-import { buildSchema } from 'graphql';
 import mongoose from 'mongoose';
-import Event, { IEvent } from './model/event';
-import User, { IUser } from './model/user';
 import graphQLSchema from "./schema/index";
 import graphQLResolver from "./resolver";
 import { authHandler } from "./middleware/auth";
@@ -38,6 +35,7 @@ mongoose.connect(
     `mongodb+srv://${credential}@cluster0-5toay.mongodb.net/${db}?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
 ).then(() => {
+    console.log('listening at port 3000...')
     app.listen(3000);
 }).catch(err => console.error(err))
 
